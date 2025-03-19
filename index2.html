@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gracias ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Pacifico', cursive;
+            overflow-x: hidden;
+            padding: clamp(10px, 3vw, 30px);
+            position: relative;
+        }
+
+        /* Enhanced background with overlay pattern */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25px 25px, rgba(255,255,255,0.2) 2%, transparent 0%),
+                radial-gradient(circle at 75px 75px, rgba(255,255,255,0.2) 2%, transparent 0%);
+            background-size: 100px 100px;
+            pointer-events: none;
+        }
+
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .music-control:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        .music-control i {
+            font-size: 1.2rem;
+            color: #e73c7e;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1 {
+            color: rgb(206, 28, 28);
+            text-align: center;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            margin-top: clamp(20px, 5vh, 50px);
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            animation: floating 3s ease-in-out infinite;
+            padding: 0 15px;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            color: white;
+            text-align: center;
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            margin-top: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 0.5px;
+            font-weight: 400;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0) rotate(-1deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+        }
+
+        .content-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(15px, 3vw, 30px);
+            padding: clamp(15px, 3vw, 30px);
+            width: 100%;
+            max-width: 650px;
+            margin-top: clamp(15px, 3vh, 30px);
+            position: relative;
+            z-index: 10;
+        }
+
+        .message-container {
+            width: 100%;
+            min-height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            perspective: 1000px;
+        }
+
+        .gift-box {
+            width: clamp(150px, 40vw, 200px);
+            height: clamp(150px, 40vw, 200px);
+            background: url('https://cdn-icons-png.flaticon.com/512/4213/4213958.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, filter 0.3s ease;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+        }
+
+        .gift-box:hover {
+            transform: scale(1.1) rotate(5deg);
+            filter: drop-shadow(0 15px 20px rgba(0,0,0,0.4)) brightness(1.1);
+        }
+
+        .gift-box.opened {
+            animation: openBox 1s forwards;
+        }
+
+        @keyframes openBox {
+            0% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.2) rotate(10deg); filter: brightness(1.5); }
+            100% { transform: scale(0) rotate(720deg); filter: brightness(2); }
+        }
+
+        .buttons-container {
+            display: none;
+            flex-direction: column;
+            gap: clamp(12px, 2.5vw, 25px);
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .show-buttons {
+            display: flex;
+            animation: showButtons 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes showButtons {
+            from { transform: scale(0) translateY(20px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        .message-button {
+            padding: clamp(12px, 2.5vw, 18px) clamp(25px, 5vw, 35px);
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            border: none;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-family: 'Pacifico', cursive;
+            width: 100%;
+            color: #e73c7e;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .message-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(231, 60, 126, 0.1) 100%);
+            transition: width 0.4s ease;
+            z-index: -1;
+        }
+
+        .message-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            letter-spacing: 0.5px;
+        }
+
+        .message-button:hover::before {
+            width: 100%;
+        }
+
+        .message-button:active {
+            transform: translateY(0);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .message {
+            display: none;
+            padding: clamp(20px, 4vw, 30px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            width: clamp(250px, 85%, 520px);
+            text-align: center;
+            animation: showMessage 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            position: relative;
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            line-height: 1.6;
+            transform-style: preserve-3d;
+            transform: rotateX(5deg);
+            transition: transform 0.3s ease;
+        }
+
+        .message:hover {
+            transform: rotateX(0deg) scale(1.02);
+        }
+
+        #message1 {
+            background: linear-gradient(135deg, #FF9A9E, #FAD0C4);
+            color: #444;
+            border-left: 5px solid rgba(255, 154, 158, 0.7);
+        }
+
+        #message2 {
+            background: linear-gradient(135deg, #A1C4FD, #C2E9FB);
+            color: #444;
+            border-left: 5px solid rgba(161, 196, 253, 0.7);
+        }
+
+        #message3 {
+            background: linear-gradient(135deg, #D4FC79, #96E6A1);
+            color: #444;
+            border-left: 5px solid rgba(212, 252, 121, 0.7);
+        }
+
+        @keyframes showMessage {
+            0% { opacity: 0; transform: translateY(-30px) rotateX(20deg); }
+            70% { opacity: 1; transform: translateY(5px) rotateX(-5deg); }
+            100% { opacity: 1; transform: translateY(0) rotateX(5deg); }
+        }
+
+        .close-message {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border: none;
+            background: rgba(255, 255, 255, 0.3);
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            cursor: pointer;
+            color: #444;
+            padding: 5px 10px;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-message:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: rotate(90deg);
+        }
+
+        /* Message content styling */
+        .message p {
+            position: relative;
+            padding: 0 10px;
+        }
+
+        .message p::before, .message p::after {
+            content: '"';
+            font-family: sans-serif;
+            font-size: 1.5em;
+            color: rgba(0, 0, 0, 0.2);
+            position: absolute;
+        }
+
+        .message p::before {
+            left: -5px;
+            top: -10px;
+        }
+
+        .message p::after {
+            right: -5px;
+            bottom: -20px;
+        }
+
+        /* Enhanced responsive design */
+        @media (max-width: 480px) {
+            .content-container {
+                gap: 15px;
+                padding: 10px;
+            }
+            .message {
+                width: 95%;
+                padding: 18px;
+            }
+            .message-button {
+                padding: 12px 20px;
+            }
+            .close-message {
+                width: 25px;
+                height: 25px;
+            }
+        }
+
+        @media (max-height: 600px) {
+            h1 {
+                margin-top: 10px;
+                font-size: clamp(1.2rem, 3.5vw, 2rem);
+            }
+            h3 {
+                font-size: clamp(0.9rem, 2.5vw, 1.3rem);
+            }
+            .content-container {
+                gap: 10px;
+                margin-top: 10px;
+            }
+            .message-container {
+                min-height: 100px;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .gift-box {
+                width: 120px;
+                height: 120px;
+            }
+            .message {
+                width: 95%;
+                padding: 15px;
+            }
+            .message-button {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Elemento de audio -->
+    <audio id="bgMusic" loop>
+        <!-- Reemplaza esta URL con la URL de tu archivo de música -->
+        <source src="music.mp3" type="audio/mp3">
+    </audio>
+    
+    <!-- Botón de control de música -->
+    <button class="music-control" onclick="toggleMusic()">
+        <i id="musicIcon" class="fas fa-volume-up"></i>
+    </button>
+
+    <h1>Si llegaste a esta pagina, es porque pulsaste si jeje ❤️</h1>
+    <h2>Continuando</h2>
+    <h3>Toca el ragalito jeje</h3>
+    
+    <div class="content-container">
+        <div class="message-container">
+            <div id="message1" class="message">
+                <button class="close-message" onclick="closeMessage(1)">×</button>
+                <p>holi nuevamente jeje, sabes?, pueda que no hablemos mucho, pero es agradable hablar contigo</p>
+            </div>
+
+            <div id="message2" class="message">
+                <button class="close-message" onclick="closeMessage(2)">×</button>
+                <p>Eres  una gran chica Nicole, sin importar que pasé, no te rindas, tienes que cumplir tus metas</p>
+            </div>
+
+
+            <div id="message3" class="message">
+                <button class="close-message" onclick="closeMessage(3)">×</button>
+                <p>Sé que, sueles ser tan seria jeje, pero a que tienes una bonita sonrisa, no dejes de sonreir".</p>
+            </div>
+        </div>
+
+        <div class="gift-box" onclick="openGift()"></div>
+        
+        <div class="buttons-container">
+            <button class="message-button" onclick="showMessage(1)">Mensaje Especial 1</button>
+            <button class="message-button" onclick="showMessage(2)">Mensaje Especial 2</button>
+            <button class="message-button" onclick="showMessage(3)">Mensaje Especial 3</button>
+            <button class="message-button" onclick="window.location.href='index3.html'">Sorpresa Final ✨</button>
+        </div>
+    </div>
+
+    <script>
+        // Reproducir música al cargar la página
+        window.onload = function() {
+            const music = document.getElementById('bgMusic');
+            // Intentamos reproducir la música
+            var promise = music.play();
+            
+            if (promise !== undefined) {
+                promise.catch(function(error) {
+                    console.log("Autoplay prevented");
+                });
+            }
+        }
+
+        // Controlar la música
+        function toggleMusic() {
+            const music = document.getElementById('bgMusic');
+            const icon = document.getElementById('musicIcon');
+            
+            if (music.paused) {
+                music.play();
+                icon.className = 'fas fa-volume-up';
+            } else {
+                music.pause();
+                icon.className = 'fas fa-volume-mute';
+            }
+        }
+
+        function openGift() {
+            const giftBox = document.querySelector('.gift-box');
+            const buttonsContainer = document.querySelector('.buttons-container');
+            
+            giftBox.classList.add('opened');
+            
+            setTimeout(() => {
+                giftBox.style.display = 'none';
+                buttonsContainer.classList.add('show-buttons');
+            }, 1000);
+        }
+
+        function showMessage(messageNum) {
+            // Ocultar todos los mensajes primero
+            document.querySelectorAll('.message').forEach(msg => {
+                msg.style.display = 'none';
+            });
+            
+            // Mostrar el mensaje seleccionado
+            const message = document.getElementById(`message${messageNum}`);
+            message.style.display = 'block';
+        }
+
+        function closeMessage(messageNum) {
+            const message = document.getElementById(`message${messageNum}`);
+            message.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
